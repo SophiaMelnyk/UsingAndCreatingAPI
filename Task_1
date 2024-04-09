@@ -1,0 +1,5 @@
+Сценарій використання зовнішнього API на прикладі WEB-сервісу прогнозування погоди OpenWeatherMap:
+1. Отримала вільний логін за посиланням https://home.openweathermap.org/users/sign_in.
+2. Далі на сторінці свого логіну до сервісу https://home.openweathermap.org/api_keys подивилась значення API key: 04c5c3df2e140fbf9cdfd70c2c08663a.
+3. Виконала один з прикладів виклику цього API, а саме запит погоди по Id міста, де заданий параметр appid, який дорівнює API Key. У підсумку запит http://api.openweathermap.org/data/2.5/weather?q=Sarny&appid=04c5c3df2e140fbf9cdfd70c2c08663a згенерував наступну відповідь:
+{"coord":{"lon":26.6019,"lat":51.338},"weather":[{"id":803,"main":"Clouds","description":"broken clouds","icon":"04d"}],"base":"stations","main":{"temp":296.37,"feels_like":295.79,"temp_min":296.37,"temp_max":296.37,"pressure":1015,"humidity":40,"sea_level":1015,"grnd_level":997},"visibility":10000,"wind":{"speed":3.86,"deg":176,"gust":4.91},"clouds":{"all":64},"dt":1712671726,"sys":{"country":"UA","sunrise":1712633427,"sunset":1712681959},"timezone":10800,"id":694792,"name":"Sarny","cod":200}
