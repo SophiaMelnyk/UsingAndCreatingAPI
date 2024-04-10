@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk"> <!-- Вказуємо мову документа -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title> <!-- Заголовок сторінки -->
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Шрифт для тексту */
+            margin: 0; /* Видаляємо зовнішні відступи */
+            padding: 20px; /* Додаємо внутрішні відступи */
+        }
+        #weather-info {
+            background-color: #f9f9f9; /* Колір фону блоку */
+            padding: 20px; /* Відступи в середині блоку */
+            border-radius: 5px; /* Закруглені кути блоку */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тінь блоку */
+            max-width: 400px; /* Максимальна ширина блоку */
+            margin: 0 auto; /* Вирівнюємо по центру */
+        }
+        p {
+            margin: 10px 0; /* Відступи між абзацами */
+        }
+    </style>
+</head>
+<body>
+    <div id="weather-info"></div> <!-- Блок для відображення погодової інформації -->
+
+    <script>
+        const API_KEY = "04c5c3df2e140fbf9cdfd70c2c08663a";
+        const city = "Sarny";
+        const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const weatherInfo = document.getElementById('weather-info');
+                const cityName = data.name;
+                const date = new Date(data.dt * 1000);
+                const temperature = (data.main.temp - 273.15).toFixed(2); // Переводимо температуру з Кельвіна у Цельсій
+                const feelsLike = (data.main.feels_like - 273.15).toFixed(2); // Переводимо "відчувається як" з Кельвіна у Цельсій
+                const windSpeed = data.wind.speed;
+
+                // Опції для форматування дати
+                const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+                const formattedDate = date.toLocaleDateString('uk-UA', options);
+
+                // Виводимо погодову інформацію у блок
+                weatherInfo.innerHTML = `
+                    <p>${cityName}, поточна дата: ${formattedDate}</p>
+                    <p>Довгота: ${data.coord.lon}</p>
+                    <p>Широта: ${data.coord.lat}</p>
+                    <p>Температура: ${temperature} градусів по Цельсію</p>
+                    <p>Відчувається як: ${feelsLike} градусів по Цельсію</p>
+                    <p>Вітер: ${windSpeed} м/сек</p>
+                `;
+            })
+            .catch(error => console.error('Помилка отримання погодових даних:', error));
+    </script>
+</body>
+</html>
